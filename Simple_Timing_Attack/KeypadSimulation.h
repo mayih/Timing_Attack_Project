@@ -8,9 +8,16 @@
 #define kEYPADPIN_5 27
 #define kEYPADPIN_6 28
 #define kEYPADPIN_7 29
+class KeypadSimulation
+{
 
-void keyPadInit();
-void inputSimulation(int input);
+    long unsigned int m_inputTime;
 
+  public:
+    long unsigned int getInputTime() {return m_inputTime;}
+    //int setInputTime(long unsigned int inputTime) m_inputTime = inputTime;
+    KeypadSimulation();
+    void inputSimulation(long unsigned int input);
+};
 
 #endif /* KeypadSimulation_h */
