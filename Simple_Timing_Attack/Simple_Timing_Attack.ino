@@ -9,7 +9,7 @@ int l = 0;
 void setup() {
   // initialize the digital pin as an output.
   keyPadInit();
-
+delay(1000);
   pinMode(PB2, INPUT);
   Serial.begin(9600);
 }
@@ -17,19 +17,15 @@ int i = 0;
 int input = 0;
 // the loop routine runs over and over again forever:
 void loop() {
+  //delay(1000);
+     inputSimulation(1);
+     delay(500);
+      inputSimulation(2);
+    delay(500);
+     
 
-   while(digitalRead(kEYPADPIN_7) != HIGH);
-  digitalWrite(kEYPADPIN_2, LOW);
-  delayMicroseconds(10);
-  digitalWrite(kEYPADPIN_2, HIGH);    
+  //
 
-    
-
-  
-  //Serial.println(input);
-  //delay(1);
- // inputSimulation(input);
- // input = 2;
   /* tps_1 = micros();
     while(digitalRead(PB2) == HIGH)
     {
