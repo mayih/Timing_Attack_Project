@@ -1,10 +1,10 @@
-#include "KeypadSimulation.h"
+#include "KeypadEmulation.h"
 
-KeypadSimulation keypadS;
+KeypadEmulation keypadS;
 
 void setup() {
   // initialize the digital pin as an output.
-  keypadS = KeypadSimulation();
+  keypadS = KeypadEmulation();
   pinMode(PB2, INPUT);
   Serial.begin(9600);
 }

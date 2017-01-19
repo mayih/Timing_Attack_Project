@@ -1,5 +1,5 @@
-#ifndef KeypadSimulation_h
-#define KeypadSimulation_h
+#ifndef KeypadEmulation_h
+#define KeypadEmulation_h
 
 #include <Energia.h>
 
@@ -11,18 +11,13 @@
 #define kEYPADPIN_5 27
 #define kEYPADPIN_6 28
 #define kEYPADPIN_7 29
-class KeypadSimulation
+class KeypadEmulation
 {
-
-    long unsigned int m_inputTime;
+    unsigned long buttonPushed(int row, int col);
     unsigned long pushButton(unsigned short input);
   public:
-    long unsigned int getInputTime() {
-      return m_inputTime;
-    }
-    //int setInputTime(long unsigned int inputTime) m_inputTime = inputTime;
-    KeypadSimulation();
+    KeypadEmulation();
     unsigned long inputSimulation(unsigned short button1, unsigned short button2, unsigned short button3, unsigned short button4);
 };
 
-#endif /* KeypadSimulation_h */
+#endif /* KeypadEmulation_h */
