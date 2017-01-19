@@ -15,7 +15,7 @@ class KeypadSimulation
 {
 
     long unsigned int m_inputTime;
-    void pushButton(unsigned short input);
+    unsigned long pushButton(unsigned short input);
   public:
     long unsigned int getInputTime() {
       return m_inputTime;
