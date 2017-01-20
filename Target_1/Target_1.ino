@@ -53,7 +53,7 @@ void setUserInput()
     lcd.print("Put your password:");
     lcd.setCursor(i % 4, 1);
     lcd.print(key);
-    //Serial.println(key);
+    
     userInput[i % 4] = key;
     if (sizeof(userInput) > 4) exit(0); //check input
 
@@ -62,18 +62,14 @@ void setUserInput()
     {
       i = 0;
       j++;
-
-      //delayMicroseconds(1);
       
-      //delay(500);
-      //Serial.println(userInput);
       lcd.setCursor(0, 2);
       if (secretPass(userInput)) lcd.print("Access granted");
       else
       {
         lcd.print("Acess denied");
       }
-      digitalWrite(ledpin, LOW);
+      
 
     }
   }
@@ -84,5 +80,6 @@ bool secretPass(char userInput[4])
   bool isEqual;
   digitalWrite(ledpin, HIGH);
   isEqual = !strncmp(passw, userInput, 4);
+  digitalWrite(ledpin, LOW);
   return isEqual;
 }

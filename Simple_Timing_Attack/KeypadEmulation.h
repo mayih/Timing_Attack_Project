@@ -13,10 +13,11 @@
 #define kEYPADPIN_7 29
 class KeypadEmulation
 {
-    unsigned long buttonPushed(int row, int col);
-    unsigned long pushButton(unsigned short input);
+    unsigned long buttonPushed(int row, int col, bool computeTimeThankSignal);
+    
   public:
     KeypadEmulation();
+    unsigned long pushButton(unsigned short input, bool computeTimeThankSignal);
     unsigned long inputSimulation(unsigned short button1, unsigned short button2, unsigned short button3, unsigned short button4);
 };
 
