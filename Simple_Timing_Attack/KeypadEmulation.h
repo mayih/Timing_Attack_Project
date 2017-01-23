@@ -3,7 +3,7 @@
 
 #include <Energia.h>
 
-#define PB2 9
+#define PB2 5
 #define kEYPADPIN_1 23
 #define kEYPADPIN_2 24
 #define kEYPADPIN_3 25

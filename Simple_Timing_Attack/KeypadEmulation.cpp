@@ -20,16 +20,19 @@ KeypadEmulation::KeypadEmulation()
 
 unsigned int KeypadEmulation::buttonPushed(int row, int col, bool computeTimeThankSignal)
 {
-  unsigned int tps = 0;
+  unsigned int tps = 0, start = 0;
   //Wait the good configuºration
   pulseIn(col, HIGH);
   digitalWrite(row, LOW); // push
   if (computeTimeThankSignal)
   {
-    noInterrupts();
+    /*noInterrupts();
     tps = pulseIn(PB2, HIGH);
-    interrupts();
-    //Serial.println(tps);
+    interrupts();*/
+    while(digitalRead(PB2) == LOW);
+    start = micros();
+     while(digitalRead(PB2) == HIGH);
+     tps = micros() - start; 
   }
   delay(DELAY); //rebound time
 
@@ -87,7 +90,7 @@ unsigned int KeypadEmulation::pushButton(unsigned short input, bool computeTimeT
 }
 
 unsigned int KeypadEmulation::inputSimulation(unsigned short button1, unsigned short button2, unsigned short button3,
-                                       unsigned short button4)
+    unsigned short button4)
 {
   pushButton(button1);
   pushButton(button2);
