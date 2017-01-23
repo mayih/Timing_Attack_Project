@@ -1,27 +1,49 @@
-#include "KeypadSimulation.h"
+#include "KeypadEmulation.h"
 
-KeypadSimulation keypadS;
+KeypadEmulation keypadS;
 
 void setup() {
   // initialize the digital pin as an output.
-  keypadS = KeypadSimulation();
-  pinMode(PB2, INPUT);
+
+  keypadS = KeypadEmulation();
+  pinMode(PB2, INPUT_PULLUP);
+  delay(1000);
   Serial.begin(9600);
+
 }
 
-int i = 0;
-unsigned long tps[12] = {0};
+
 
 // the loop routine runs over and over again forever:
 void loop() {
-  for(int i = 0; i < 12; i++) 
+  unsigned int t = 0;
+  float average = 0, averages[12] = {0};
+  unsigned int maximum[4] = {0};
+  
+  for (int i = 0; i < 12; i++) 
   {
-    Serial.println(i);
-    tps[i] = keypadS.inputSimulation(i, 3, 4, 5);
-    delay(1000);
-    Serial.println(tps[i]);
+    for (int j = 0; j < 10; j++)
+    {
+      //delayMicroseconds(10000);
+      t = keypadS.inputSimulation(i, 1, 1, 4);
+      average += t;
+      t = 0;
+    }
+    averages[i] = average / 10.0;
+    average = 0;
   }
   
-  Serial.println("");
-  delay(1000);
+ for(int i = 0; i < 11; i++ ){
+  Serial.println(averages[i]);
+     if(averages[i] < averages[i + 1])
+      maximum[0] = i; 
+ }
+    
+    Serial.println(maximum[0]);
+ 
+
+  delay(10000);
+
+
+  Serial.println();
 }
