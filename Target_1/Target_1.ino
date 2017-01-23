@@ -8,9 +8,10 @@
 #define D7 3
 #define LCDCOLS 20
 #define LCDROWS 4
+
 LiquidCrystal lcd(RS, E, D4, D5, D6, D7);
 
-const byte ledpin = 13;
+const byte ledpin = 12;
 
 bool secretPass(char userInput[4]);
 void setUserInput();
@@ -53,7 +54,7 @@ void setUserInput()
     lcd.print("Put your password:");
     lcd.setCursor(i % 4, 1);
     lcd.print(key);
-    
+    //Serial.println(key);
     userInput[i % 4] = key;
     if (sizeof(userInput) > 4) exit(0); //check input
 
@@ -62,21 +63,27 @@ void setUserInput()
     {
       i = 0;
       j++;
+
+      //delayMicroseconds(1);
       
+      //delay(500);
+      //Serial.println(userInput);
       lcd.setCursor(0, 2);
-      if (secretPass(userInput)) lcd.print("Access granted");
+      if (secretPass(userInput))
+      {
+        lcd.print("Access granted");
+      }
       else
       {
         lcd.print("Acess denied");
       }
       
-
     }
   }
 }
 bool secretPass(char userInput[4])
 {
-  char passw[4] = "1315";
+  char passw[4] = "9315";
   bool isEqual;
   digitalWrite(ledpin, HIGH);
   isEqual = !strncmp(passw, userInput, 4);
