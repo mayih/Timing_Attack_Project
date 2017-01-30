@@ -27,12 +27,12 @@ unsigned int KeypadEmulation::buttonPushed(int row, int col, bool computeTimeTha
   if (computeTimeThankSignal)
   {
     /*noInterrupts();
-    tps = pulseIn(PB2, HIGH);
-    interrupts();*/
-    while(digitalRead(PB2) == LOW);
+      tps = pulseIn(PB2, HIGH);
+      interrupts();*/
+    while (digitalRead(PB2) == LOW);
     start = micros();
-     while(digitalRead(PB2) == HIGH);
-     tps = micros() - start; 
+    while (digitalRead(PB2) == HIGH);
+    tps = micros() - start;
   }
   delay(DELAY); //rebound time
 
