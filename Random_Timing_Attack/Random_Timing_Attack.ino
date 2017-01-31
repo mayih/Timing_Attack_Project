@@ -29,7 +29,6 @@ void maximum(unsigned short pos)
     averages[maximums[pos]] = (timeSum / 80.00);
     
     Serial.println(averages[maximums[pos]]);
-    delay(1000);
   }
   maximums[pos] = 0;
   for (int i = 0; i < 11; i++)
