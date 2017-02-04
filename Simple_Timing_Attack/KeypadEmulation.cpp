@@ -1,5 +1,5 @@
 #include "KeypadEmulation.h"
-#define DELAY 12
+#define DELAY 4000
 
 KeypadEmulation::KeypadEmulation()
 {
@@ -18,26 +18,26 @@ KeypadEmulation::KeypadEmulation()
   pinMode(kEYPADPIN_7, INPUT);
 }
 
-unsigned int KeypadEmulation::buttonPushed(int row, int col, bool computeTimeThankSignal)
+unsigned int KeypadEmulation::buttonPushed(const byte row, const byte col, bool computeTimeThankSignal)
 {
   unsigned int tps = 0, start = 0;
-  //Wait the good configuºration
+  //Wait the good configuiration for push key
+  noInterrupts();
   pulseIn(col, HIGH);
+  interrupts();
   digitalWrite(row, LOW); // push
-  if (computeTimeThankSignal)
+ 
+  delayMicroseconds(DELAY); //rebound time
+ if (computeTimeThankSignal)
   {
-    /*noInterrupts();
-      tps = pulseIn(PB2, HIGH);
-      interrupts();*/
-    while (digitalRead(PB2) == LOW);
+    while(digitalRead(PB2) == LOW);
     start = micros();
-    while (digitalRead(PB2) == HIGH);
-    tps = micros() - start;
+     while(digitalRead(PB2) == HIGH);
+     tps = micros() - start; 
   }
-  delay(DELAY); //rebound time
-
   digitalWrite(row, HIGH); //return to initial state
-  delay(13);
+  
+  delay(90);
   return tps;
 }
 unsigned int KeypadEmulation::pushButton(unsigned short input, bool computeTimeThankSignal = false)
@@ -90,7 +90,7 @@ unsigned int KeypadEmulation::pushButton(unsigned short input, bool computeTimeT
 }
 
 unsigned int KeypadEmulation::inputSimulation(unsigned short button1, unsigned short button2, unsigned short button3,
-                                       unsigned short button4)
+    unsigned short button4)
 {
   pushButton(button1);
   pushButton(button2);

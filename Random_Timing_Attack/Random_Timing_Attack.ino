@@ -1,10 +1,8 @@
 #include "KeypadEmulation.h"
 
 KeypadEmulation keypadS;
-unsigned short maximums[4] = {0};
+unsigned short maximums[4] = {0}; //password
 void setup() {
-  // initialize the digital pin as an output.
-
   keypadS = KeypadEmulation();
   pinMode(PB2, INPUT_PULLUP);
   delay(1000);
@@ -14,6 +12,7 @@ void maximum(unsigned short pos)
 {
   int t = 0;
   double timeSum = 0, averages[12] = {0};
+  //compute average time for all keys, the position of key defined by pos
   for (maximums[pos] = 0; maximums[pos] < 12; maximums[pos]++)
   {
     timeSum = 0;
@@ -26,11 +25,12 @@ void maximum(unsigned short pos)
       timeSum = timeSum + (t);
       t = 0;
     }
-    averages[maximums[pos]] = (timeSum / 80.00);
+    averages[maximums[pos]] = (timeSum / 80.00); //average by key
     
     Serial.println(averages[maximums[pos]]);
   }
   maximums[pos] = 0;
+  //Compute the key with the great average
   for (int i = 0; i < 11; i++)
   {
     if (averages[maximums[pos]] < averages[i + 1]) {
@@ -51,6 +51,7 @@ void loop() {
   }
 keypadS.inputSimulation((unsigned short)maximums[0], (unsigned short)maximums[1],
                                   (unsigned short)maximums[2], (unsigned short)maximums[3]) ;
+  //reinitialise the password to 0000
   for(int i = 0; i < 4; i++)
   {
     maximums[i] = 0;

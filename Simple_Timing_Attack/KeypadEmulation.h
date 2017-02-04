@@ -13,7 +13,7 @@
 #define kEYPADPIN_7 29
 class KeypadEmulation
 {
-    unsigned int buttonPushed(int row, int col, bool computeTimeThankSignal);
+    unsigned int buttonPushed(const byte row, const byte col, bool computeTimeThankSignal);
     
   public:
     KeypadEmulation();

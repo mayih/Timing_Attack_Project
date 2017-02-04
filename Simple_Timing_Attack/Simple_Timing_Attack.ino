@@ -1,88 +1,63 @@
 #include "KeypadEmulation.h"
 
 KeypadEmulation keypadS;
-
+unsigned short maximums[4] = {0}; //password
 void setup() {
-  // initialize the digital pin as an output.
-
   keypadS = KeypadEmulation();
   pinMode(PB2, INPUT_PULLUP);
   delay(1000);
   Serial.begin(9600);
 }
-float average(unsigned short Num1, unsigned short Num2, unsigned short Num3, unsigned short Num4)
+void maximum(unsigned short pos)
 {
-  unsigned int t = 0;
-  float average = 0;
-  for (int j = 0; j < 10; j++)
+  int t = 0;
+  double timeSum = 0, averages[12] = {0};
+  
+  //compute average time for all keys, the position of key defined by pos
+  for (maximums[pos] = 0; maximums[pos] < 12; maximums[pos]++)
+  {
+    timeSum = 0;
+    for (int j = 0; j < 5; j++)
     {
-      //delayMicroseconds(10000);
-      t = keypadS.inputSimulation(Num1, Num2, Num3, Num4);
-      average += t;
+      
+      t = keypadS.inputSimulation((unsigned short)maximums[0], (unsigned short)maximums[1],
+                                  (unsigned short)maximums[2], (unsigned short)maximums[3]) ; 
+         
+      timeSum = timeSum + (t);
       t = 0;
     }
-    return average / 10.0;
+    averages[maximums[pos]] = (timeSum / 5.00); //average by key
     
+    Serial.println(averages[maximums[pos]]);
+  }
+  maximums[pos] = 0;
+  //Compute the key with the great average
+  for (int i = 0; i < 11; i++)
+  {
+    if (averages[maximums[pos]] < averages[i + 1]) {
+      maximums[pos] = i + 1;
+    }
+  }
 }
 
 // the loop routine runs over and over again forever:
 void loop() {
+//delay(600000);
+  for (int i = 0; i < 4; i++)
+  {
+    maximum(i);
+
+    Serial.println(maximums[i]);
+    delay(1);
+  }
+keypadS.inputSimulation((unsigned short)maximums[0], (unsigned short)maximums[1],
+                                  (unsigned short)maximums[2], (unsigned short)maximums[3]) ;
   
-  float averages[4][12] = {{0}};
-  unsigned int maximum[4] = {0};
-  for (int i = 0; i < 12; i++)
+  //reinitialise the password to 0000
+  for(int i = 0; i < 4; i++)
   {
-    averages[0][i] = average(i, 1, 1, 4);
-  //  Serial.println(averages[0][i]);
+    maximums[i] = 0;
   }
-  for (int i = 0; i < 11; i++)
-  {
-    if (averages[0][maximum[0]] < averages[0][i + 1]) {
-      maximum[0] = i + 1;
-    }
-  }
-  //Serial.println(maximum[0]);
-  //delay(10000);
-  for (int i = 0; i < 12; i++)
-  {
-    averages[1][i] = average(maximum[0], i, 1, 4);
-    //Serial.println(averages[1][i]);
-  }
-  for (int i = 0; i < 11; i++)
-  {
-    if (averages[1][maximum[1]] < averages[1][i + 1]) {
-      maximum[1] = i + 1;
-    }
-  }
-  //Serial.println(maximum[1]);
-  //delay(10000);
- for (int i = 0; i < 12; i++)
-  {
-    averages[2][i] = average(maximum[0], maximum[1], i, 4);
-    //Serial.println(averages[2][i]);
-  }
-  for (int i = 0; i < 11; i++)
-  {
-    if (averages[2][maximum[2]] < averages[2][i + 1]) {
-      maximum[2] = i + 1;
-    }
-  }
-  //Serial.println(maximum[2]);
-  //delay(10000);
-  for (int i = 0; i < 12; i++)
-  {
-    averages[3][i] = average(maximum[0], maximum[1], maximum[2], i);
-    Serial.println(averages[3][i]);
-  }
-  for (int i = 0; i < 11; i++)
-  {
-    if (averages[3][maximum[3]] < averages[3][i + 1]) {
-      maximum[3] = i + 1;
-    }
-  }
-  Serial.println(maximum[3]);
-  keypadS.inputSimulation(maximum[0], maximum[1], maximum[2], maximum[3]);
-  
   delay(60000);
 
   Serial.println();

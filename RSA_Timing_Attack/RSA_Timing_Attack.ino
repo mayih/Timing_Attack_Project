@@ -11,9 +11,7 @@ void setup() {
 void loop() {
 //delay(600000);
 unsigned int tps = 0, start = 0;
-    
-     tps = pulseIn(PB2, HIGH);
-     
-Serial.println(tps);
-  Serial.println();
+    tps = pulseIn(PB2, HIGH);
+    Serial.println(tps);
+    Serial.println();
 }
