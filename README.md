@@ -19,11 +19,3 @@ For this project I use one TI board and three Arduino Uno (one for each step). I
   c)  c) of step 1.   
   d)  d) of step 2.  
   e)  Write a program on the TI board that allowing a timing attack in spite of the insertion of a random delay on the Arduino Uno.  
-
-3.  Step Three: Write an algorithm allowing a basic timing attack despite an RSA type encryption.  
-  a)  Search documentation on a timing attack despite an RSA type encryption.  
-  b)  Use openssl library for RSA encryption on Arduino Uno, if it's not possible I would write RSA encryption.  
-  c)  Write a program on the Arduino Uno that keeps a message thanks to a password encrypt with RSA.  
-  d)  c) of step 1.  
-  e)  d) of step 1.  
-  f)  Write a program on the TI board that allowing simple timing attack with password encrypt with RSA on the Arduino Uno.  
